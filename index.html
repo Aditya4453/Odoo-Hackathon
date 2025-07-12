@@ -1035,6 +1035,31 @@
       alert(error.message);
     }
   });
+  const container = document.getElementById("user-profiles-grid");
+
+  firebase.firestore()
+    .collection("users")
+    .where("isPublic", "==", true)
+    .onSnapshot((snapshot) => {
+      container.innerHTML = ""; // clear existing cards
+
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+
+        // create a card element
+        const card = document.createElement("div");
+        card.className = "border rounded-lg p-4 shadow-md mb-4 bg-white";
+
+        card.innerHTML = `
+          <h3 class="text-lg font-bold">${data.name}</h3>
+          <p><strong>Skills Offered:</strong> ${data.skillsOffered?.join(", ")}</p>
+          <p><strong>Skills Wanted:</strong> ${data.skillsWanted?.join(", ")}</p>
+          <button class="mt-2 px-3 py-1 bg-teal-600 text-white rounded">Request</button>
+        `;
+
+        container.appendChild(card);
+      });
+    });
 
         // Sample data
         const sampleSkills = ['JavaScript', 'Python', 'Guitar', 'Photography', 'Cooking', 'Spanish', 'Yoga', 'Drawing', 'Marketing', 'Writing', 'Excel', 'Photoshop', 'Public Speaking', 'Gardening', 'Chess', 'Piano', 'Singing', 'Dancing', 'Painting', 'Coding'];
