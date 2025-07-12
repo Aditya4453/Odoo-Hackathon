@@ -14,16 +14,7 @@ A **mini web application** that enables users to **list their skills** and **req
 
 > Develop a Skill Swap Platform — a mini application that enables users to **list their skills** and **request others in return**.
 
-### 🎯 Core Objectives
 
-- Create and manage user profiles
-- Add **skills offered** and **skills wanted**
-- Request swaps and accept/reject them
-- View all users' skill offerings
-- Enable feedback or ratings after swaps
-- Support privacy controls and search by skills
-
----
 
 ## 🧑‍🤝‍🧑 Team Codewale
 
@@ -42,24 +33,6 @@ A **mini web application** that enables users to **list their skills** and **req
 
 ---
 
-## ✨ Features
-
-- ✅ User Authentication
-- ✅ Profile Setup with Skills & Availability
-- ✅ Browse/Search by Skills
-- ✅ Request, Accept, Reject, or Cancel Swaps
-- ✅ Ratings & Feedback
-- ✅ Clean & Responsive UI
-
----
-
-## 📸 Screenshots
-
-> *(Add your project screenshots here after building UI)*  
-> Example:
-> ![Skill Swap Dashboard](./assets/dashboard.png)
-
----
 
 ## 🧪 Getting Started (For Devs)
 
