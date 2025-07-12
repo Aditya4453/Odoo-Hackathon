@@ -1,13 +1,1676 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillSwap - Learn. Teach. Grow.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cosmic-purple': '#F042FF',
+                        'cosmic-blue': '#7226FF',
+                        'cosmic-cyan': '#87F5F5',
+                        'dark-space': '#010030',
+                        'dark-purple': '#160078',
+                        'light-cosmic': '#FFE5F1'
+                    },
+                    fontFamily: {
+                        'outfit': ['Outfit', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.8s ease-out',
+                        'bounce-in': 'bounceIn 0.6s ease-out',
+                        'drift': 'drift 8s ease-in-out infinite',
+                    },
+                    boxShadow: {
+                        'neon-purple': '0 0 20px rgba(240, 66, 255, 0.5)',
+                        'neon-cyan': '0 0 20px rgba(135, 245, 245, 0.5)',
+                        'neon-blue': '0 0 20px rgba(114, 38, 255, 0.5)',
+                        'cosmic': '0 8px 32px rgba(240, 66, 255, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(240, 66, 255, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 30px rgba(240, 66, 255, 0.8), 0 0 40px rgba(135, 245, 245, 0.3);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            70% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drift {
+
+            0%,
+            100% {
+                transform: translateX(0px) translateY(0px);
+            }
+
+            25% {
+                transform: translateX(20px) translateY(-10px);
+            }
+
+            50% {
+                transform: translateX(-15px) translateY(-20px);
+            }
+
+            75% {
+                transform: translateX(-10px) translateY(10px);
+            }
+        }
+
+        .cosmic-gradient {
+            background: linear-gradient(135deg, #87F5F5 0%, #F042FF 50%, #7226FF 100%);
+        }
+
+        .cosmic-bg {
+            background: linear-gradient(135deg, #010030 0%, #160078 100%);
+        }
+
+        .light-theme-bg {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 30%, #f1f5f9 70%, #cbd5e1 100%);
+            position: relative;
+        }
+
+        .light-theme-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                radial-gradient(circle at 20% 20%, rgba(240, 66, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(135, 245, 245, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(114, 38, 255, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .light-floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .light-floating-elements::before,
+        .light-floating-elements::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            animation: drift 12s ease-in-out infinite;
+        }
+
+        .light-floating-elements::before {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(240, 66, 255, 0.08), rgba(135, 245, 245, 0.08));
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .light-floating-elements::after {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, rgba(114, 38, 255, 0.06), rgba(240, 66, 255, 0.06));
+            bottom: 20%;
+            right: 15%;
+            animation-delay: 6s;
+        }
+
+        .light-theme-bg .text-white {
+            color: #1e293b !important;
+        }
+
+        .light-theme-bg .text-white\/70 {
+            color: rgba(30, 41, 59, 0.7) !important;
+        }
+
+        .light-theme-bg .text-white\/80 {
+            color: rgba(30, 41, 59, 0.8) !important;
+        }
+
+        .light-theme-bg .glass-effect {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(240, 66, 255, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .light-theme-bg .skill-tag {
+            background: linear-gradient(135deg, rgba(240, 66, 255, 0.08), rgba(135, 245, 245, 0.08));
+            border: 1px solid rgba(240, 66, 255, 0.2);
+        }
+
+        .neon-border {
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, #87F5F5, #F042FF) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.1;
+            animation: drift 8s ease-in-out infinite;
+        }
+
+        .chat-bubble-sender {
+            background: linear-gradient(135deg, #7226FF, #F042FF);
+        }
+
+        .chat-bubble-receiver {
+            background: linear-gradient(135deg, #87F5F5, #ffffff);
+            color: #010030;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, rgba(240, 66, 255, 0.1), rgba(135, 245, 245, 0.1));
+            border: 1px solid rgba(240, 66, 255, 0.3);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+
+<body class="font-outfit transition-all duration-300">
+    <!-- App Container -->
+    <div id="app" class="min-h-screen">
+        <!-- Landing Page -->
+        <div id="landing-page" class="cosmic-bg min-h-screen relative overflow-hidden">
+            <!-- Floating Background Elements -->
+            <div class="floating-icon top-20 left-10 text-cosmic-cyan text-4xl animate-float"
+                style="animation-delay: 0s;">⚡</div>
+            <div class="floating-icon top-40 right-20 text-cosmic-purple text-3xl animate-float"
+                style="animation-delay: 2s;">🎨</div>
+            <div class="floating-icon bottom-40 left-20 text-cosmic-cyan text-5xl animate-float"
+                style="animation-delay: 4s;">🚀</div>
+            <div class="floating-icon top-60 left-1/2 text-cosmic-purple text-2xl animate-float"
+                style="animation-delay: 1s;">💡</div>
+            <div class="floating-icon bottom-20 right-10 text-cosmic-cyan text-4xl animate-float"
+                style="animation-delay: 3s;">🎯</div>
+
+            <!-- Navigation -->
+            <nav class="relative z-10 p-6 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div
+                        class="w-12 h-12 cosmic-gradient rounded-2xl flex items-center justify-center shadow-neon-purple">
+                        <i data-lucide="zap" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <span class="text-3xl font-bold text-white">SkillSwap</span>
+                </div>
+                <div class="space-x-4">
+                    <button id="login-btn"
+                        class="px-6 py-3 glass-effect text-white rounded-2xl hover:shadow-neon-cyan transition-all duration-300 font-medium">
+                        Login
+                    </button>
+                    <button id="signup-btn"
+                        class="px-6 py-3 cosmic-gradient text-white rounded-2xl hover:shadow-neon-purple transition-all duration-300 font-semibold animate-glow">
+                        Sign Up
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <div class="relative z-10 flex flex-col items-center justify-center min-h-[80vh] px-6 text-center">
+                <div class="animate-fade-in">
+                    <h1 class="text-7xl md:text-8xl font-bold text-white mb-6">
+                        Skill<span class="text-cosmic-cyan">Swap</span>
+                    </h1>
+                    <p class="text-3xl text-cosmic-cyan mb-4 font-medium">Learn. Teach. Grow.</p>
+                    <p class="text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+                        Join the community where knowledge flows freely. Exchange skills, ignite potential, and grow
+                        together in this infinite universe of learning.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <button id="hero-signup"
+                            class="px-10 py-4 cosmic-gradient text-white font-bold rounded-2xl hover:shadow-neon-purple transform hover:scale-105 transition-all duration-300 text-lg animate-glow">
+                            Start Your Journey
+                        </button>
+                        <button id="explore-btn"
+                            class="px-10 py-4 glass-effect text-white font-semibold rounded-2xl hover:shadow-neon-cyan transform hover:scale-105 transition-all duration-300 text-lg">
+                            Explore Skills
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="relative z-10 p-6 glass-effect mx-6 rounded-3xl mb-8">
+                <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+                    <div class="text-white animate-slide-up" style="animation-delay: 0.2s;">
+                        <div
+                            class="w-16 h-16 cosmic-gradient rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-neon-purple">
+                            <i data-lucide="users" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-cosmic-cyan">Global Community</h3>
+                        <p class="text-white/80">Connect with talented minds worldwide</p>
+                    </div>
+                    <div class="text-white animate-slide-up" style="animation-delay: 0.4s;">
+                        <div
+                            class="w-16 h-16 cosmic-gradient rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-neon-purple">
+                            <i data-lucide="repeat" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-cosmic-cyan">Skill Exchange</h3>
+                        <p class="text-white/80">Trade knowledge in perfect balance</p>
+                    </div>
+                    <div class="text-white animate-slide-up" style="animation-delay: 0.6s;">
+                        <div
+                            class="w-16 h-16 cosmic-gradient rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-neon-purple">
+                            <i data-lucide="message-circle" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-3 text-cosmic-cyan">Real-Time Chat</h3>
+                        <p class="text-white/80">Instant communication and collaboration</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="login-modal"
+            class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div
+                class="glass-effect rounded-3xl shadow-cosmic w-full max-w-md p-8 animate-bounce-in border border-cosmic-purple/30">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 cosmic-gradient rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-neon-purple">
+                        <i data-lucide="log-in" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Welcome Back</h2>
+                    <p class="text-cosmic-cyan">Enter your learning journey</p>
+                </div>
+
+                <form id="login-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Email</label>
+                        <input type="email" id="login-email" required
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                            placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Password</label>
+                        <input type="password" id="login-password" required
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                            placeholder="••••••••">
+                    </div>
+                    <button type="submit"
+                        class="w-full py-4 cosmic-gradient text-white font-bold rounded-2xl hover:shadow-neon-purple transition-all duration-300 text-lg animate-glow">
+                        Enter the Cosmos
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <span class="text-white/70">New to the universe? </span>
+                    <button id="goto-signup"
+                        class="text-cosmic-cyan hover:text-cosmic-purple font-semibold transition-colors">Join
+                        us</button>
+                </div>
+
+                <button id="close-login" class="mt-6 w-full py-3 text-white/70 hover:text-white transition-colors">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+        <!-- Signup Modal -->
+        <div id="signup-modal"
+            class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div
+                class="glass-effect rounded-3xl shadow-cosmic w-full max-w-md p-8 animate-bounce-in border border-cosmic-purple/30">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 cosmic-gradient rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-neon-purple">
+                        <i data-lucide="user-plus" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Join SkillSwap</h2>
+                    <p class="text-cosmic-cyan">Begin your learning journey</p>
+                </div>
+
+                <form id="signup-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Full Name</label>
+                        <input type="text" id="signup-name" required
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                            placeholder="Your cosmic name">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Email</label>
+                        <input type="email" id="signup-email" required
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                            placeholder="your@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Password</label>
+                        <input type="password" id="signup-password" required
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                            placeholder="••••••••">
+                    </div>
+                    <button type="submit"
+                        class="w-full py-4 cosmic-gradient text-white font-bold rounded-2xl hover:shadow-neon-purple transition-all duration-300 text-lg animate-glow">
+                        Create Cosmic Account
+                    </button>
+                </form>
+
+                <div class="mt-8 text-center">
+                    <span class="text-white/70">Already in the cosmos? </span>
+                    <button id="goto-login"
+                        class="text-cosmic-cyan hover:text-cosmic-purple font-semibold transition-colors">Sign
+                        in</button>
+                </div>
+
+                <button id="close-signup" class="mt-6 w-full py-3 text-white/70 hover:text-white transition-colors">
+                    Cancel
+                </button>
+            </div>
+        </div>
+
+        <!-- Profile Setup Modal -->
+        <div id="profile-setup-modal"
+            class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div
+                class="glass-effect rounded-3xl shadow-cosmic w-full max-w-2xl p-8 animate-bounce-in border border-cosmic-purple/30 max-h-[90vh] overflow-y-auto">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 cosmic-gradient rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-neon-purple">
+                        <i data-lucide="settings" class="w-10 h-10 text-white"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Setup Your Profile</h2>
+                    <p class="text-cosmic-cyan">Tell the world about your skills</p>
+                </div>
+
+                <form id="profile-setup-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-cosmic-cyan mb-3">Location (Optional)</label>
+                            <input type="text" id="setup-location"
+                                class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan"
+                                placeholder="Your cosmic location">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-cosmic-cyan mb-3">Profile Visibility</label>
+                            <div class="flex space-x-4 mt-3">
+                                <label class="flex items-center text-white">
+                                    <input type="radio" name="profile-type" value="public" checked
+                                        class="mr-3 text-cosmic-purple">
+                                    <span>Public</span>
+                                </label>
+                                <label class="flex items-center text-white">
+                                    <input type="radio" name="profile-type" value="private"
+                                        class="mr-3 text-cosmic-purple">
+                                    <span>Private</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Skills I Can Teach</label>
+                        <div class="flex flex-wrap gap-2 mb-3" id="skills-offered-tags"></div>
+                        <input type="text" id="skills-offered-input" placeholder="Type a skill and press Enter"
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Skills I Want to Learn</label>
+                        <div class="flex flex-wrap gap-2 mb-3" id="skills-wanted-tags"></div>
+                        <input type="text" id="skills-wanted-input" placeholder="Type a skill and press Enter"
+                            class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-3">Availability</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" value="weekends" class="mr-3 text-cosmic-purple">
+                                <span>Weekends</span>
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" value="evenings" class="mr-3 text-cosmic-purple">
+                                <span>Evenings</span>
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" value="weekdays" class="mr-3 text-cosmic-purple">
+                                <span>Weekdays</span>
+                            </label>
+                            <label class="flex items-center text-white">
+                                <input type="checkbox" value="flexible" class="mr-3 text-cosmic-purple">
+                                <span>Flexible</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-4 cosmic-gradient text-white font-bold rounded-2xl hover:shadow-neon-purple transition-all duration-300 text-lg animate-glow">
+                        Launch Into SkillSwap
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="hidden min-h-screen">
+            <!-- Sidebar -->
+            <div id="sidebar"
+                class="fixed left-0 top-0 h-full w-64 cosmic-bg glass-effect border-r border-cosmic-purple/30 z-40 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+                <div class="p-6">
+                    <div class="flex items-center space-x-3 mb-8">
+                        <div
+                            class="w-12 h-12 cosmic-gradient rounded-2xl flex items-center justify-center shadow-neon-purple">
+                            <i data-lucide="zap" class="w-7 h-7 text-white"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">SkillSwap</span>
+                    </div>
+
+                    <nav class="space-y-2">
+                        <button
+                            class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-white rounded-2xl hover:bg-white/10 transition-all duration-300"
+                            data-section="home">
+                            <i data-lucide="home" class="w-5 h-5"></i>
+                            <span>Home</span>
+                        </button>
+                        <button
+                            class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-white/70 rounded-2xl hover:bg-white/10 transition-all duration-300"
+                            data-section="myswap">
+                            <i data-lucide="repeat" class="w-5 h-5"></i>
+                            <span>MySwap</span>
+                        </button>
+                        <button
+                            class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-white/70 rounded-2xl hover:bg-white/10 transition-all duration-300"
+                            data-section="chat">
+                            <i data-lucide="message-circle" class="w-5 h-5"></i>
+                            <span>Chat</span>
+                        </button>
+                        <button
+                            class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-white/70 rounded-2xl hover:bg-white/10 transition-all duration-300"
+                            data-section="profile">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                            <span>Profile</span>
+                        </button>
+
+                    </nav>
+
+                    <div class="mt-8 pt-8 border-t border-white/10">
+                        <button id="theme-toggle"
+                            class="w-full flex items-center space-x-3 px-4 py-3 text-white/70 rounded-2xl hover:bg-white/10 transition-all duration-300">
+                            <i data-lucide="moon" class="w-5 h-5"></i>
+                            <span>Dark Mode</span>
+                        </button>
+                        <button id="logout-btn"
+                            class="w-full flex items-center space-x-3 px-4 py-3 text-white/70 rounded-2xl hover:bg-white/10 transition-all duration-300 mt-2">
+                            <i data-lucide="log-out" class="w-5 h-5"></i>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn"
+                class="lg:hidden fixed top-4 left-4 z-50 w-12 h-12 cosmic-gradient rounded-2xl flex items-center justify-center shadow-neon-purple">
+                <i data-lucide="menu" class="w-6 h-6 text-white"></i>
+            </button>
+
+            <!-- Main Content -->
+            <div class="lg:ml-64 min-h-screen">
+                <!-- Home Section -->
+                <div id="home-section" class="dashboard-section cosmic-bg min-h-screen p-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="mb-8 text-center">
+                            <h1 class="text-4xl font-bold text-white mb-4">Discover Skills</h1>
+                            <p class="text-cosmic-cyan text-lg">Find your perfect skill exchange partner</p>
+                        </div>
+
+                        <!-- Search and Filters -->
+                        <div class="glass-effect rounded-3xl p-6 mb-8 border border-cosmic-purple/30">
+                            <div class="grid md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-cosmic-cyan mb-3">Search Skills</label>
+                                    <input type="text" id="skill-search"
+                                        placeholder="e.g., JavaScript, Guitar, Photography..."
+                                        class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-cosmic-cyan mb-3">Location</label>
+                                    <input type="text" id="location-filter" placeholder="Any location"
+                                        class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-cosmic-cyan mb-3">Availability</label>
+                                    <select id="availability-filter"
+                                        class="w-full px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white">
+                                        <option value="">Any time</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="evenings">Evenings</option>
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="flexible">Flexible</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- User Profiles Grid -->
+                        <div id="user-profiles-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Profiles will be populated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MySwap Section -->
+                <div id="myswap-section" class="dashboard-section hidden cosmic-bg min-h-screen p-6">
+                    <div class="max-w-6xl mx-auto">
+                        <div class="mb-8 text-center">
+                            <h1 class="text-4xl font-bold text-white mb-4">My Swaps</h1>
+                            <p class="text-cosmic-cyan text-lg">Manage your skill exchange connections</p>
+                        </div>
+
+                        <!-- Swap Tabs -->
+                        <div class="glass-effect rounded-3xl border border-cosmic-purple/30 mb-8">
+                            <div class="border-b border-white/10">
+                                <nav class="flex space-x-8 px-6">
+                                    <button
+                                        class="swap-tab py-4 px-2 border-b-2 border-cosmic-purple text-cosmic-purple font-medium"
+                                        data-tab="pending">
+                                        Pending
+                                    </button>
+                                    <button
+                                        class="swap-tab py-4 px-2 border-b-2 border-transparent text-white/70 hover:text-white"
+                                        data-tab="accepted">
+                                        Accepted
+                                    </button>
+                                    <button
+                                        class="swap-tab py-4 px-2 border-b-2 border-transparent text-white/70 hover:text-white"
+                                        data-tab="incoming">
+                                        Incoming
+                                    </button>
+                                </nav>
+                            </div>
+
+                            <div class="p-6">
+                                <div id="pending-tab-content" class="tab-content">
+                                    <div class="text-center py-12">
+                                        <i data-lucide="clock" class="w-16 h-16 text-cosmic-cyan mx-auto mb-4"></i>
+                                        <h3 class="text-xl font-semibold text-white mb-2">No Pending Requests</h3>
+                                        <p class="text-white/70">Start exploring to send your first cosmic swap request!
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="accepted-tab-content" class="tab-content hidden">
+                                    <div class="text-center py-12">
+                                        <i data-lucide="handshake" class="w-16 h-16 text-cosmic-cyan mx-auto mb-4"></i>
+                                        <h3 class="text-xl font-semibold text-white mb-2">No Accepted Swaps</h3>
+                                        <p class="text-white/70">Accepted swaps will appear here.</p>
+                                    </div>
+                                </div>
+                                <div id="incoming-tab-content" class="tab-content hidden">
+                                    <div class="text-center py-12">
+                                        <i data-lucide="inbox" class="w-16 h-16 text-cosmic-cyan mx-auto mb-4"></i>
+                                        <h3 class="text-xl font-semibold text-white mb-2">No Incoming Requests</h3>
+                                        <p class="text-white/70">Requests from other cosmic beings will appear here.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Section -->
+                <div id="chat-section" class="dashboard-section hidden cosmic-bg min-h-screen p-6">
+                    <div class="light-floating-elements"></div>
+                    <div class="max-w-4xl mx-auto relative z-10">
+                        <div class="mb-8 text-center">
+                            <h1 class="text-4xl font-bold text-white mb-4">Chat & Support</h1>
+                            <p class="text-cosmic-cyan text-lg">Connect with others or get help</p>
+                        </div>
+
+                        <!-- Chat Tabs -->
+                        <div class="glass-effect rounded-3xl border border-cosmic-purple/30 mb-6">
+                            <div class="border-b border-white/10">
+                                <nav class="flex space-x-8 px-6">
+                                    <button
+                                        class="chat-mode-tab py-4 px-2 border-b-2 border-cosmic-purple text-cosmic-purple font-medium"
+                                        data-mode="peer">
+                                        Peer Chat
+                                    </button>
+                                    <button
+                                        class="chat-mode-tab py-4 px-2 border-b-2 border-transparent text-white/70 hover:text-white"
+                                        data-mode="support">
+                                        Help & Support
+                                    </button>
+                                </nav>
+                            </div>
+                        </div>
+
+                        <div class="glass-effect rounded-3xl border border-cosmic-purple/30 h-[70vh] flex flex-col">
+                            <!-- Peer Chat Mode -->
+                            <div id="peer-chat-mode" class="chat-mode flex flex-col h-full">
+                                <!-- Chat Header -->
+                                <div class="p-6 border-b border-white/10">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-12 h-12 cosmic-gradient rounded-full flex items-center justify-center">
+                                            <span class="text-white font-semibold">A</span>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-white">Alex Chen</h3>
+                                            <p class="text-cosmic-cyan text-sm">JavaScript ↔ Guitar</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Chat Messages -->
+                                <div class="flex-1 p-6 overflow-y-auto" id="peer-chat-messages">
+                                    <div class="space-y-4">
+                                        <div class="flex justify-end">
+                                            <div class="chat-bubble-sender max-w-xs px-4 py-3 rounded-2xl text-white">
+                                                Hey! I'd love to learn guitar from you. I can teach you JavaScript in
+                                                return!
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-start">
+                                            <div class="chat-bubble-receiver max-w-xs px-4 py-3 rounded-2xl">
+                                                That sounds perfect! I've been wanting to learn web development. When
+                                                would you like to start?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Chat Input -->
+                                <div class="p-6 border-t border-white/10">
+                                    <div class="flex space-x-4">
+                                        <input type="text" id="peer-chat-input" placeholder="Type your message..."
+                                            class="flex-1 px-6 py-4 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 focus:shadow-neon-cyan">
+                                        <button id="send-peer-message"
+                                            class="px-6 py-4 cosmic-gradient rounded-2xl hover:shadow-neon-purple transition-all duration-300">
+                                            <i data-lucide="send" class="w-5 h-5 text-white"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Support Chat Mode -->
+                            <div id="support-chat-mode" class="chat-mode hidden flex flex-col h-full">
+                                <!-- Support Header -->
+                                <div class="p-6 border-b border-white/10">
+                                    <div class="flex items-center space-x-4">
+                                        <div
+                                            class="w-12 h-12 cosmic-gradient rounded-full flex items-center justify-center">
+                                            <i data-lucide="bot" class="w-6 h-6 text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h3 class="text-xl font-semibold text-white">SkillBot</h3>
+                                            <p class="text-cosmic-cyan text-sm">Here to help you navigate SkillSwap</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Support Messages -->
+                                <div class="flex-1 p-6 overflow-y-auto" id="support-chat-messages">
+                                    <div class="space-y-4">
+                                        <div class="flex justify-start">
+                                            <div
+                                                class="chat-bubble-receiver max-w-md px-4 py-3 rounded-2xl flex items-start space-x-2">
+                                                <i data-lucide="bot"
+                                                    class="w-4 h-4 mt-1 flex-shrink-0 text-cosmic-purple"></i>
+                                                <div>
+                                                    <span>Hi! I'm SkillBot. How can I help you today? Choose a question
+                                                        below:</span>
+                                                    <div class="mt-4 space-y-2">
+                                                        <button
+                                                            class="help-question-btn block w-full text-left p-3 bg-cosmic-purple/20 hover:bg-cosmic-purple/30 rounded-xl text-sm transition-all duration-300"
+                                                            data-question="getting-started">
+                                                            🚀 How do I start swapping skills on SkillSwap?
+                                                        </button>
+                                                        <button
+                                                            class="help-question-btn block w-full text-left p-3 bg-cosmic-purple/20 hover:bg-cosmic-purple/30 rounded-xl text-sm transition-all duration-300"
+                                                            data-question="request-status">
+                                                            📬 How do I know if someone accepted my swap request?
+                                                        </button>
+                                                        <button
+                                                            class="help-question-btn block w-full text-left p-3 bg-cosmic-purple/20 hover:bg-cosmic-purple/30 rounded-xl text-sm transition-all duration-300"
+                                                            data-question="chat-access">
+                                                            💬 Can I chat with someone before accepting a request?
+                                                        </button>
+                                                        <button
+                                                            class="help-question-btn block w-full text-left p-3 bg-cosmic-purple/20 hover:bg-cosmic-purple/30 rounded-xl text-sm transition-all duration-300"
+                                                            data-question="skill-types">
+                                                            🎯 What kind of skills can I list on my profile?
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Support Input -->
+                                <div class="p-6 border-t border-white/10">
+                                    <button
+                                        class="w-full py-4 cosmic-gradient text-white font-semibold rounded-2xl hover:shadow-neon-purple transition-all duration-300 animate-glow">
+                                        <i data-lucide="message-circle" class="w-5 h-5 inline mr-2"></i>
+                                        Need More Help? Contact Support
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Profile Section -->
+                <div id="profile-section" class="dashboard-section hidden cosmic-bg min-h-screen p-6">
+                    <div class="max-w-4xl mx-auto">
+                        <div class="mb-8 text-center">
+                            <h1 class="text-4xl font-bold text-white mb-4">My Profile</h1>
+                            <p class="text-cosmic-cyan text-lg">Manage your profile and skills</p>
+                        </div>
+
+                        <div class="grid lg:grid-cols-3 gap-8">
+                            <!-- Profile Card -->
+                            <div class="lg:col-span-1">
+                                <div class="glass-effect rounded-3xl border border-cosmic-purple/30 p-6 text-center">
+                                    <div
+                                        class="w-24 h-24 cosmic-gradient rounded-full flex items-center justify-center mx-auto mb-6 shadow-neon-purple">
+                                        <span class="text-white text-3xl font-bold" id="profile-avatar">U</span>
+                                    </div>
+                                    <h3 class="text-2xl font-bold text-white mb-2" id="profile-name">Your Name</h3>
+                                    <p class="text-cosmic-cyan mb-4" id="profile-location">Location</p>
+                                    <div class="flex items-center justify-center space-x-2 mb-6">
+                                        <span class="text-sm text-white/70">Profile:</span>
+                                        <span
+                                            class="px-3 py-1 bg-cosmic-purple/20 text-cosmic-purple rounded-full text-sm font-medium"
+                                            id="profile-visibility">Public</span>
+                                    </div>
+                                    <button id="edit-profile-btn"
+                                        class="w-full py-3 cosmic-gradient text-white font-semibold rounded-2xl hover:shadow-neon-purple transition-all duration-300">
+                                        Edit Profile
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Skills Information -->
+                            <div class="lg:col-span-2 space-y-6">
+                                <div class="glass-effect rounded-3xl border border-cosmic-purple/30 p-6">
+                                    <h4 class="text-xl font-semibold text-white mb-4">Skills I Can Teach</h4>
+                                    <div class="flex flex-wrap gap-3" id="skills-offered-display">
+                                        <!-- Skills will be populated here -->
+                                    </div>
+                                </div>
+
+                                <div class="glass-effect rounded-3xl border border-cosmic-purple/30 p-6">
+                                    <h4 class="text-xl font-semibold text-white mb-4">Skills I Want to Learn</h4>
+                                    <div class="flex flex-wrap gap-3" id="skills-wanted-display">
+                                        <!-- Skills will be populated here -->
+                                    </div>
+                                </div>
+
+                                <div class="glass-effect rounded-3xl border border-cosmic-purple/30 p-6">
+                                    <h4 class="text-xl font-semibold text-white mb-4">Availability</h4>
+                                    <div class="flex flex-wrap gap-2" id="availability-display">
+                                        <!-- Availability will be populated here -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Swap Request Modal -->
+        <div id="swap-request-modal"
+            class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div
+                class="glass-effect rounded-3xl shadow-cosmic w-full max-w-md p-6 animate-bounce-in border border-cosmic-purple/30">
+                <h3 class="text-2xl font-bold text-white mb-4">Send Swap Request</h3>
+                <p class="text-cosmic-cyan mb-6">Connect with <span id="swap-target-name"
+                        class="font-semibold text-cosmic-purple"></span></p>
+
+                <div class="space-y-4 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-2">Your Skill to Offer</label>
+                        <select id="offer-skill-select"
+                            class="w-full px-4 py-3 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white">
+                            <option value="">Select a skill</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-cosmic-cyan mb-2">Skill You Want</label>
+                        <select id="want-skill-select"
+                            class="w-full px-4 py-3 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white">
+                            <option value="">Select a skill</option>
+                        </select>
+                    </div>
+                </div>
+
+                <textarea id="swap-message" placeholder="Hi! I'd love to exchange skills with you..."
+                    class="w-full px-4 py-3 bg-white/10 border-2 border-cosmic-purple/30 rounded-2xl focus:border-cosmic-cyan focus:outline-none transition-all duration-300 text-white placeholder-white/50 h-24 resize-none mb-6 focus:shadow-neon-cyan"></textarea>
+
+                <div class="flex space-x-4">
+                    <button id="send-swap-request"
+                        class="flex-1 py-3 cosmic-gradient text-white font-semibold rounded-2xl hover:shadow-neon-purple transition-all duration-300">Send
+                        Request</button>
+                    <button id="cancel-swap-request"
+                        class="flex-1 py-3 bg-white/10 text-white font-medium rounded-2xl hover:bg-white/20 transition-all duration-300">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+        const firebaseConfig = {
+            apiKey: "AIzaSyBoFW8rzt7s0xq_0ZF4wQlG_QFLyXIvgKk",
+            authDomain: "skillswap-30254.firebaseapp.com",
+            projectId: "skillswap-30254",
+            storageBucket: "skillswap-30254.firebasestorage.app",
+            messagingSenderId: "147317696119",
+            appId: "1:147317696119:web:f5500089a6532d089b8872"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        // App State
+        let currentUser = null;
+        let skillsOffered = [];
+        let skillsWanted = [];
+        let availability = [];
+        let sampleUsers = [];
+        let isDarkMode = true;
+        let pendingRequests = [];
+        let acceptedSwaps = [];
+        let incomingRequests = [];
+
+
+        document.getElementById("signup-form").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("signup-name").value;
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-password").value;
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                const uid = userCredential.user.uid;
+
+                await db.collection("users").doc(uid).set({
+                    uid,
+                    name,
+                    email,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+
+                alert("Signup successful!");
+                document.getElementById("signup-modal").classList.add("hidden");
+                document.getElementById("profile-setup-modal").classList.remove("hidden");
+            } catch (error) {
+                alert(error.message);
+            }
+        });
+        document.getElementById("profile-setup-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const user = auth.currentUser;
+    if (!user) return alert("Login first.");
+
+    const uid = user.uid;
+    const location = document.getElementById("setup-location").value;
+    const profileType = document.querySelector('input[name="profile-type"]:checked').value;
+
+    const skillsOffered = [...document.querySelectorAll("#skills-offered-tags span")].map(el => el.textContent.trim());
+    const skillsWanted = [...document.querySelectorAll("#skills-wanted-tags span")].map(el => el.textContent.trim());
+
+    const availability = [...document.querySelectorAll('#profile-setup-form input[type="checkbox"]:checked')].map(cb => cb.value);
+
+    await db.collection("users").doc(uid).update({
+      location,
+      profileType,
+      skillsOffered,
+      skillsWanted,
+      availability
+    });
+
+    alert("Profile updated!");
+    document.getElementById("profile-setup-modal").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
+  });
+   document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      alert("Login successful!");
+      document.getElementById("login-modal").classList.add("hidden");
+      document.getElementById("dashboard").classList.remove("hidden");
+    } catch (error) {
+      alert(error.message);
+    }
+  });
+
+        // Sample data
+        const sampleSkills = ['JavaScript', 'Python', 'Guitar', 'Photography', 'Cooking', 'Spanish', 'Yoga', 'Drawing', 'Marketing', 'Writing', 'Excel', 'Photoshop', 'Public Speaking', 'Gardening', 'Chess', 'Piano', 'Singing', 'Dancing', 'Painting', 'Coding'];
+
+        function generateSampleUsers() {
+            const names = ['Alex Chen', 'Sarah Nova', 'Mike Stellar', 'Emma Cosmic', 'David Nebula', 'Lisa Quantum', 'John Orbit', 'Maria Galaxy', 'Chris Meteor', 'Anna Stardust'];
+            const locations = ['New York', 'San Francisco', 'London', 'Toronto', 'Berlin', 'Tokyo', 'Sydney', 'Paris', 'Amsterdam', 'Barcelona'];
+            const availabilities = [['weekends'], ['evenings'], ['flexible'], ['weekdays', 'evenings'], ['weekends', 'flexible']];
+
+            sampleUsers = names.map((name, index) => ({
+                id: index + 1,
+                name,
+                location: locations[index],
+                skillsOffered: sampleSkills.slice(index, index + 3),
+                skillsWanted: sampleSkills.slice(index + 3, index + 6),
+                availability: availabilities[index % availabilities.length],
+                avatar: name.split(' ').map(n => n[0]).join(''),
+                isPublic: Math.random() > 0.2,
+                rating: (Math.random() * 2 + 3).toFixed(1)
+            }));
+        }
+
+        // Navigation functions
+        function showSection(sectionId) {
+            const sections = ['landing-page', 'dashboard'];
+            sections.forEach(section => {
+                document.getElementById(section).classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function showDashboardSection(sectionId) {
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            // Update nav active state
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.classList.remove('text-white', 'bg-white/10');
+                btn.classList.add('text-white/70');
+            });
+            document.querySelector(`[data-section="${sectionId.replace('-section', '')}"]`).classList.add('text-white', 'bg-white/10');
+        }
+
+        // Skills management
+        function addSkill(type, skill, isSetup = false) {
+            const prefix = isSetup ? '' : 'edit-';
+            const skillsArray = type === 'offered' ? skillsOffered : skillsWanted;
+            const tagsContainer = document.getElementById(`${prefix}skills-${type}-tags`);
+
+            if (skill && !skillsArray.includes(skill)) {
+                skillsArray.push(skill);
+                renderSkillTags(type, isSetup);
+            }
+        }
+
+        function removeSkill(type, skill, isSetup = false) {
+            const skillsArray = type === 'offered' ? skillsOffered : skillsWanted;
+            const index = skillsArray.indexOf(skill);
+            if (index > -1) {
+                skillsArray.splice(index, 1);
+                renderSkillTags(type, isSetup);
+            }
+        }
+
+        function renderSkillTags(type, isSetup = false) {
+            const prefix = isSetup ? '' : 'edit-';
+            const skillsArray = type === 'offered' ? skillsOffered : skillsWanted;
+            const tagsContainer = document.getElementById(`${prefix}skills-${type}-tags`);
+
+            tagsContainer.innerHTML = '';
+
+            skillsArray.forEach(skill => {
+                const tag = document.createElement('span');
+                tag.className = 'skill-tag inline-flex items-center px-4 py-2 rounded-full text-sm text-cosmic-cyan font-medium';
+                tag.innerHTML = `
+                    ${skill}
+                    <button type="button" class="ml-2 hover:opacity-70" onclick="removeSkill('${type}', '${skill}', ${isSetup})">
+                        <i data-lucide="x" class="w-3 h-3"></i>
+                    </button>
+                `;
+                tagsContainer.appendChild(tag);
+            });
+            lucide.createIcons();
+        }
+
+        // User profile rendering
+        function renderUserProfiles(users = sampleUsers) {
+            const container = document.getElementById('user-profiles-grid');
+            container.innerHTML = '';
+
+            const filteredUsers = users.filter(user => user.isPublic);
+
+            filteredUsers.forEach((user, index) => {
+                const card = document.createElement('div');
+                card.className = 'glass-effect rounded-3xl border border-cosmic-purple/30 p-6 hover:shadow-neon-purple transition-all duration-300 transform hover:-translate-y-2 animate-fade-in';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-16 h-16 cosmic-gradient rounded-full flex items-center justify-center shadow-neon-purple">
+                            <span class="text-white font-bold text-lg">${user.avatar}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-xl font-semibold text-white">${user.name}</h3>
+                            <p class="text-cosmic-cyan">${user.location}</p>
+                            <div class="flex items-center space-x-1 mt-1">
+                                <span class="text-cosmic-purple">★</span>
+                                <span class="text-white/70">${user.rating}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="text-sm font-medium text-cosmic-cyan mb-3">Can Teach:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${user.skillsOffered.map(skill => `<span class="px-3 py-1 bg-cosmic-purple/20 text-cosmic-purple rounded-full text-xs font-medium">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h4 class="text-sm font-medium text-cosmic-cyan mb-3">Wants to Learn:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            ${user.skillsWanted.map(skill => `<span class="px-3 py-1 bg-cosmic-cyan/20 text-cosmic-cyan rounded-full text-xs font-medium">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <div class="flex flex-wrap gap-2">
+                            ${user.availability.map(avail => `<span class="px-3 py-1 bg-white/10 text-white rounded-full text-xs">${avail}</span>`).join('')}
+                        </div>
+                    </div>
+                    
+                    <button class="request-swap-btn w-full py-3 cosmic-gradient text-white font-semibold rounded-2xl hover:shadow-neon-purple transition-all duration-300 animate-glow" data-user-id="${user.id}" data-user-name="${user.name}">
+                        Request Swap
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter users
+        function filterUsers() {
+            const searchTerm = document.getElementById('skill-search').value.toLowerCase();
+            const locationFilter = document.getElementById('location-filter').value.toLowerCase();
+            const availabilityFilter = document.getElementById('availability-filter').value;
+
+            let filteredUsers = sampleUsers.filter(user => {
+                const matchesSearch = !searchTerm ||
+                    user.skillsOffered.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+                    user.skillsWanted.some(skill => skill.toLowerCase().includes(searchTerm)) ||
+                    user.name.toLowerCase().includes(searchTerm);
+
+                const matchesLocation = !locationFilter || user.location.toLowerCase().includes(locationFilter);
+                const matchesAvailability = !availabilityFilter || user.availability.includes(availabilityFilter);
+
+                return matchesSearch && matchesLocation && matchesAvailability;
+            });
+
+            renderUserProfiles(filteredUsers);
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            isDarkMode = !isDarkMode;
+            const body = document.body;
+            const dashboard = document.getElementById('dashboard');
+            const sections = document.querySelectorAll('.dashboard-section');
+            const themeIcon = document.querySelector('#theme-toggle i');
+            const themeText = document.querySelector('#theme-toggle span');
+
+            if (isDarkMode) {
+                // Dark mode
+                body.classList.remove('light-theme-bg');
+                body.classList.add('cosmic-bg');
+                dashboard.classList.remove('light-theme-bg');
+                dashboard.classList.add('cosmic-bg');
+                sections.forEach(section => {
+                    section.classList.remove('light-theme-bg');
+                    section.classList.add('cosmic-bg');
+                });
+                themeIcon.setAttribute('data-lucide', 'moon');
+                themeText.textContent = 'Dark Mode';
+            } else {
+                // Light mode
+                body.classList.remove('cosmic-bg');
+                body.classList.add('light-theme-bg');
+                dashboard.classList.remove('cosmic-bg');
+                dashboard.classList.add('light-theme-bg');
+                sections.forEach(section => {
+                    section.classList.remove('cosmic-bg');
+                    section.classList.add('light-theme-bg');
+                });
+                themeIcon.setAttribute('data-lucide', 'sun');
+                themeText.textContent = 'Light Mode';
+            }
+
+            lucide.createIcons();
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        // Swap management functions
+        function addToPendingRequests(targetName, offerSkill, wantSkill, message) {
+            const request = {
+                id: Date.now(),
+                targetName,
+                offerSkill,
+                wantSkill,
+                message,
+                timestamp: new Date().toLocaleDateString()
+            };
+            pendingRequests.push(request);
+            updateSwapTabs();
+        }
+
+        function updateSwapTabs() {
+            // Update pending tab
+            const pendingContent = document.getElementById('pending-tab-content');
+            if (pendingRequests.length === 0) {
+                pendingContent.innerHTML = `
+                    <div class="text-center py-12">
+                        <i data-lucide="clock" class="w-16 h-16 text-cosmic-cyan mx-auto mb-4"></i>
+                        <h3 class="text-xl font-semibold text-white mb-2">No Pending Requests</h3>
+                        <p class="text-white/70">Start exploring to send your first cosmic swap request!</p>
+                    </div>
+                `;
+            } else {
+                pendingContent.innerHTML = `
+                    <div class="space-y-4">
+                        ${pendingRequests.map(request => `
+                            <div class="glass-effect rounded-2xl p-4 border border-cosmic-purple/30">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h4 class="text-lg font-semibold text-white">${request.targetName}</h4>
+                                    <span class="text-xs text-cosmic-cyan">${request.timestamp}</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 mb-3">
+                                    <div>
+                                        <span class="text-sm text-cosmic-cyan">You offer:</span>
+                                        <p class="text-white font-medium">${request.offerSkill}</p>
+                                    </div>
+                                    <div>
+                                        <span class="text-sm text-cosmic-cyan">You want:</span>
+                                        <p class="text-white font-medium">${request.wantSkill}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <i data-lucide="clock" class="w-4 h-4 text-yellow-400"></i>
+                                    <span class="text-sm text-yellow-400">Waiting for response...</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+            lucide.createIcons();
+        }
+
+        // Update user profile display
+        function updateUserProfile() {
+            if (currentUser) {
+                document.getElementById('profile-avatar').textContent = currentUser.name.split(' ').map(n => n[0]).join('');
+                document.getElementById('profile-name').textContent = currentUser.name;
+                document.getElementById('profile-location').textContent = currentUser.location || 'Location not specified';
+                document.getElementById('profile-visibility').textContent = currentUser.profileType === 'private' ? 'Private' : 'Public';
+
+                // Update skill displays
+                const offeredContainer = document.getElementById('skills-offered-display');
+                const wantedContainer = document.getElementById('skills-wanted-display');
+                const availabilityContainer = document.getElementById('availability-display');
+
+                offeredContainer.innerHTML = skillsOffered.map(skill =>
+                    `<span class="skill-tag px-4 py-2 rounded-full text-sm text-cosmic-purple font-medium">${skill}</span>`
+                ).join('');
+
+                wantedContainer.innerHTML = skillsWanted.map(skill =>
+                    `<span class="skill-tag px-4 py-2 rounded-full text-sm text-cosmic-cyan font-medium">${skill}</span>`
+                ).join('');
+
+                availabilityContainer.innerHTML = availability.map(avail =>
+                    `<span class="px-3 py-1 bg-white/10 text-white rounded-full text-sm">${avail}</span>`
+                ).join('');
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function () {
+            generateSampleUsers();
+
+            // Load theme from localStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                isDarkMode = true; // Set to true first so toggle switches to light
+                toggleTheme();
+            } else {
+                // Ensure dark mode is properly applied on load
+                document.body.classList.add('cosmic-bg');
+                document.getElementById('dashboard').classList.add('cosmic-bg');
+                document.querySelectorAll('.dashboard-section').forEach(section => {
+                    section.classList.add('cosmic-bg');
+                });
+            }
+
+            // Modal controls
+            document.getElementById('login-btn').addEventListener('click', () => {
+                document.getElementById('login-modal').classList.remove('hidden');
+            });
+
+            document.getElementById('signup-btn').addEventListener('click', () => {
+                document.getElementById('signup-modal').classList.remove('hidden');
+            });
+
+            document.getElementById('hero-signup').addEventListener('click', () => {
+                document.getElementById('signup-modal').classList.remove('hidden');
+            });
+
+            document.getElementById('explore-btn').addEventListener('click', () => {
+                document.getElementById('signup-modal').classList.remove('hidden');
+            });
+
+            // Close modals
+            document.getElementById('close-login').addEventListener('click', () => {
+                document.getElementById('login-modal').classList.add('hidden');
+            });
+
+            document.getElementById('close-signup').addEventListener('click', () => {
+                document.getElementById('signup-modal').classList.add('hidden');
+            });
+
+            // Navigation between login/signup
+            document.getElementById('goto-signup').addEventListener('click', () => {
+                document.getElementById('login-modal').classList.add('hidden');
+                document.getElementById('signup-modal').classList.remove('hidden');
+            });
+
+            document.getElementById('goto-login').addEventListener('click', () => {
+                document.getElementById('signup-modal').classList.add('hidden');
+                document.getElementById('login-modal').classList.remove('hidden');
+            });
+
+            // Form submissions
+            document.getElementById('login-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                currentUser = { email, name: 'Cosmic User', location: 'Digital Universe', profileType: 'public' };
+                skillsOffered = ['JavaScript', 'Photography', 'Writing'];
+                skillsWanted = ['Guitar', 'Spanish', 'Cooking'];
+                availability = ['evenings', 'weekends'];
+
+                document.getElementById('login-modal').classList.add('hidden');
+                showSection('dashboard');
+                showDashboardSection('home-section');
+                updateUserProfile();
+                renderUserProfiles();
+                updateSwapTabs(); // Initialize swap tabs
+            });
+
+            document.getElementById('signup-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const name = document.getElementById('signup-name').value;
+                const email = document.getElementById('signup-email').value;
+                currentUser = { email, name, location: '' };
+                skillsOffered = [];
+                skillsWanted = [];
+                availability = [];
+
+                document.getElementById('signup-modal').classList.add('hidden');
+                document.getElementById('profile-setup-modal').classList.remove('hidden');
+            });
+
+            // Profile setup
+            document.getElementById('profile-setup-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                currentUser.location = document.getElementById('setup-location').value;
+                currentUser.profileType = document.querySelector('input[name="profile-type"]:checked').value;
+
+                // Get availability
+                availability = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+
+                document.getElementById('profile-setup-modal').classList.add('hidden');
+                showSection('dashboard');
+                showDashboardSection('home-section');
+                updateUserProfile();
+                renderUserProfiles();
+                updateSwapTabs(); // Initialize swap tabs
+            });
+
+            // Skills input for setup
+            document.getElementById('skills-offered-input').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill('offered', this.value.trim(), true);
+                    this.value = '';
+                }
+            });
+
+            document.getElementById('skills-wanted-input').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addSkill('wanted', this.value.trim(), true);
+                    this.value = '';
+                }
+            });
+
+            // Dashboard navigation
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const section = this.dataset.section;
+                    showDashboardSection(section + '-section');
+                });
+            });
+
+            // Mobile menu
+            document.getElementById('mobile-menu-btn').addEventListener('click', function () {
+                const sidebar = document.getElementById('sidebar');
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // Theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+            // Logout
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                currentUser = null;
+                showSection('landing-page');
+            });
+
+            // Search and filter
+            document.getElementById('skill-search').addEventListener('input', filterUsers);
+            document.getElementById('location-filter').addEventListener('input', filterUsers);
+            document.getElementById('availability-filter').addEventListener('change', filterUsers);
+
+            // Swap request - using event delegation
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.request-swap-btn')) {
+                    const button = e.target.closest('.request-swap-btn');
+                    const userName = button.dataset.userName;
+                    const userId = button.dataset.userId;
+                    const user = sampleUsers.find(u => u.id == userId);
+
+                    if (!user) return;
+
+                    document.getElementById('swap-target-name').textContent = userName;
+
+                    // Populate skill selects - ensure current user has skills
+                    const offerSelect = document.getElementById('offer-skill-select');
+                    const wantSelect = document.getElementById('want-skill-select');
+
+                    // Use current user's skills or default skills if not set
+                    const userOfferedSkills = skillsOffered.length > 0 ? skillsOffered : ['JavaScript', 'Photography', 'Writing'];
+                    const targetUserSkills = user.skillsOffered && user.skillsOffered.length > 0 ? user.skillsOffered : ['Guitar', 'Spanish', 'Cooking'];
+
+                    offerSelect.innerHTML = '<option value="">Select a skill you can teach</option>' +
+                        userOfferedSkills.map(skill => `<option value="${skill}">${skill}</option>`).join('');
+
+                    wantSelect.innerHTML = '<option value="">Select a skill you want to learn</option>' +
+                        targetUserSkills.map(skill => `<option value="${skill}">${skill}</option>`).join('');
+
+                    // Store target user info for the request
+                    document.getElementById('swap-request-modal').dataset.targetUserId = userId;
+                    document.getElementById('swap-request-modal').dataset.targetUserName = userName;
+
+                    document.getElementById('swap-request-modal').classList.remove('hidden');
+                }
+            });
+
+            document.getElementById('send-swap-request').addEventListener('click', function () {
+                const offerSkill = document.getElementById('offer-skill-select').value;
+                const wantSkill = document.getElementById('want-skill-select').value;
+                const message = document.getElementById('swap-message').value;
+                const modal = document.getElementById('swap-request-modal');
+                const targetUserName = modal.dataset.targetUserName;
+
+                if (!offerSkill || !wantSkill) {
+                    alert('Please select both skills for the exchange');
+                    return;
+                }
+
+                // Create a more detailed success message
+                const successMessage = `🚀 Swap request sent successfully to ${targetUserName}!\n\n` +
+                    `Your offer: ${offerSkill}\n` +
+                    `You want to learn: ${wantSkill}\n\n` +
+                    `They'll receive your request and can accept it in their MySwap section.`;
+
+                alert(successMessage);
+
+                // Reset form and close modal
+                document.getElementById('offer-skill-select').value = '';
+                document.getElementById('want-skill-select').value = '';
+                document.getElementById('swap-message').value = 'Hi! I\'d love to exchange skills with you...';
+                modal.classList.add('hidden');
+
+                // Add to pending requests (for demo purposes)
+                addToPendingRequests(targetUserName, offerSkill, wantSkill, message);
+            });
+
+            document.getElementById('cancel-swap-request').addEventListener('click', function () {
+                // Reset form fields
+                document.getElementById('offer-skill-select').value = '';
+                document.getElementById('want-skill-select').value = '';
+                document.getElementById('swap-message').value = 'Hi! I\'d love to exchange skills with you...';
+                document.getElementById('swap-request-modal').classList.add('hidden');
+            });
+
+            // Swap tabs
+            document.querySelectorAll('.swap-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const tabName = this.dataset.tab;
+
+                    // Update tab styles
+                    document.querySelectorAll('.swap-tab').forEach(t => {
+                        t.classList.remove('border-cosmic-purple', 'text-cosmic-purple');
+                        t.classList.add('border-transparent', 'text-white/70');
+                    });
+                    this.classList.add('border-cosmic-purple', 'text-cosmic-purple');
+                    this.classList.remove('border-transparent', 'text-white/70');
+
+                    // Show content
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    document.getElementById(tabName + '-tab-content').classList.remove('hidden');
+                });
+            });
+
+            // Chat mode switching
+            document.querySelectorAll('.chat-mode-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    const mode = this.dataset.mode;
+
+                    // Update tab styles
+                    document.querySelectorAll('.chat-mode-tab').forEach(t => {
+                        t.classList.remove('border-cosmic-purple', 'text-cosmic-purple');
+                        t.classList.add('border-transparent', 'text-white/70');
+                    });
+                    this.classList.add('border-cosmic-purple', 'text-cosmic-purple');
+                    this.classList.remove('border-transparent', 'text-white/70');
+
+                    // Show/hide chat modes
+                    document.querySelectorAll('.chat-mode').forEach(chatMode => {
+                        chatMode.classList.add('hidden');
+                    });
+                    document.getElementById(mode + '-chat-mode').classList.remove('hidden');
+                });
+            });
+
+            // Help question answers
+            const helpAnswers = {
+                'getting-started': 'To start, sign up and fill out your profile with skills you can teach or want to learn. Then go to the Home page, search for others, and click "Request Swap" to connect.',
+                'request-status': 'Check the **MySwap** tab. You\'ll see Pending, Accepted, and Incoming swaps. When someone accepts, the chat will unlock and you can start messaging!',
+                'chat-access': 'Not yet! Chat is enabled only after a request is accepted by both users. This keeps conversations focused and intentional.',
+                'skill-types': 'Any teachable skill! From coding and design to music, art, and even baking. Add as many as you\'d like using skill tags during profile setup.'
+            };
+
+            // Help question buttons
+            document.addEventListener('click', function (e) {
+                if (e.target.closest('.help-question-btn')) {
+                    const button = e.target.closest('.help-question-btn');
+                    const question = button.dataset.question;
+                    const questionText = button.textContent.trim();
+                    const answer = helpAnswers[question];
+
+                    const messagesContainer = document.getElementById('support-chat-messages');
+
+                    // Add user question
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'flex justify-end mb-4';
+                    questionDiv.innerHTML = `
+                        <div class="chat-bubble-sender max-w-md px-4 py-3 rounded-2xl text-white flex items-start space-x-2">
+                            <i data-lucide="help-circle" class="w-4 h-4 mt-1 flex-shrink-0"></i>
+                            <span>${questionText}</span>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(questionDiv);
+
+                    // Add bot answer after delay
+                    setTimeout(() => {
+                        const answerDiv = document.createElement('div');
+                        answerDiv.className = 'flex justify-start mb-4';
+                        answerDiv.innerHTML = `
+                            <div class="chat-bubble-receiver max-w-md px-4 py-3 rounded-2xl flex items-start space-x-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 mt-1 flex-shrink-0 text-green-500"></i>
+                                <span>${answer}</span>
+                            </div>
+                        `;
+                        messagesContainer.appendChild(answerDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        lucide.createIcons();
+                    }, 800);
+
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    lucide.createIcons();
+                }
+            });
+
+            // Peer chat functionality
+            document.getElementById('send-peer-message').addEventListener('click', function () {
+                const input = document.getElementById('peer-chat-input');
+                const message = input.value.trim();
+
+                if (message) {
+                    const messagesContainer = document.getElementById('peer-chat-messages');
+                    const messageDiv = document.createElement('div');
+                    messageDiv.className = 'flex justify-end';
+                    messageDiv.innerHTML = `
+                        <div class="chat-bubble-sender max-w-xs px-4 py-3 rounded-2xl text-white">
+                            ${message}
+                        </div>
+                    `;
+                    messagesContainer.appendChild(messageDiv);
+                    input.value = '';
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                    // Auto-reply after a short delay
+                    setTimeout(() => {
+                        const replyDiv = document.createElement('div');
+                        replyDiv.className = 'flex justify-start';
+                        replyDiv.innerHTML = `
+                            <div class="chat-bubble-receiver max-w-xs px-4 py-3 rounded-2xl">
+                                We are happy to help! 😊 Thanks for reaching out through SkillSwap!
+                            </div>
+                        `;
+                        messagesContainer.appendChild(replyDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }, 1500);
+                }
+            });
+
+            document.getElementById('peer-chat-input').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('send-peer-message').click();
+                }
+            });
+        });
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'95dfedcd219154e9',t:'MTc1MjMxNjg5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
 </html>
