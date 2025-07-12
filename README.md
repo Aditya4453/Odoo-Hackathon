@@ -1,7 +1,5 @@
 # 🔁 Skill Swap Platform – Codewale 🔁
 
-A **mini web application** that enables users to **list their skills** and **request others in return**, promoting collaborative growth and mutual learning.
-
 > 🚀 Built for Odoo Hackathon '25  
 > 👨‍💻 Powered by React, TailwindCSS, and Firebase  
 > 💡 Designed and Developed by Team **Codewale**
